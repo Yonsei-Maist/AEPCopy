@@ -12,5 +12,5 @@ AEP 프로그램이 외부 설치가 불가하여 만든 프로젝트
 ## 사용
 
 다음 프로젝트에서 사용할 것
-https://github.com/Yonsei-Maist/ABR-PeakDetector.git
-프로세스 이름 : AEPCopy
+- https://github.com/Yonsei-Maist/ABR-PeakDetector.git
+- 프로세스 이름 : AEPCopy
