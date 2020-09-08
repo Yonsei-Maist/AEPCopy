@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿/// <summary>
+/// ABR 측정 프로그램인 AEP의 가짜 프로그램 버전
+/// 왼쪽 그래프의 경우, 실제 ABR 측정 결과 중 하나
+/// 오른쪽 그래프의 경우, 랜덤 그래프 생성
+/// @Author Chanwoo Gwon, Yonsei Univ. Researcher, 2020.05. ~
+/// @Date 2020.09.
+/// </summary>
+
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace AEPCopy {
+	/// <summary>
+	/// 메인 폼
+	/// </summary>
 	public partial class FormMain : Form {
 		private class DoublePoint {
 			public double X { get; set; }
@@ -20,16 +25,29 @@ namespace AEPCopy {
 				this.Y = Y;
 			}
 		}
-
+		
+		#region Field
+		/// <summary>
+		/// 랜덤 유닛
+		/// </summary>
 		private Random initRand = new Random(new DateTime().Millisecond);
 		private Random updownRand = new Random(new DateTime().Millisecond);
+		#endregion
 
+		#region Method
+
+		/// <summary>
+		/// 생성자
+		/// </summary>
 		public FormMain() {
 			InitializeComponent();
 
 			this.drawChart();
 		}
 
+		/// <summary>
+		/// 차트 출력 인터페이스
+		/// </summary>
 		private void drawChart() {
 			DoublePoint[] leftGraph = this.getMadeGraph(); // this.makeGraph(696, 200);
 			DoublePoint[] rightGraph = this.makeGraph(696, 200);
@@ -38,8 +56,17 @@ namespace AEPCopy {
 			this.draw(this.chartRight, rightGraph, Color.FromArgb(255, 251, 0, 5));
 		}
 
+		/// <summary>
+		/// 차트를 출력하는 매소드
+		/// </summary>
+		/// <param name="chart">차트를 그릴 컨트롤</param>
+		/// <param name="point">차트에 입력될 데이터</param>
+		/// <param name="color">차트 색깔</param>
 		private void draw(Chart chart, DoublePoint[] point, Color color) {
+			// 차트 초기화
 			chart.Series.Clear();
+
+			//차트 데이터 생성
 			Series series1 = new Series {
 				Name = "Series1",
 				Color = color,
@@ -49,6 +76,7 @@ namespace AEPCopy {
 				BorderWidth = 2
 			};
 
+			// 차트 입력
 			chart.Series.Add(series1);
 
 			for (int i = 0; i < point.Length; i++) {
@@ -56,9 +84,14 @@ namespace AEPCopy {
 				series1.Points.AddXY(p.X, p.Y);
 			}
 
+			// 차트 다시 그리기
 			chart.ResetAutoValues();
 		}
 
+		/// <summary>
+		/// ABR 예시 값을 차트 데이터 형식으로 변환
+		/// </summary>
+		/// <returns></returns>
 		private DoublePoint[] getMadeGraph() {
 			
 			double[] value = new double[] {
@@ -740,13 +773,20 @@ namespace AEPCopy {
 
 			return point;
 		}
-
-		private DoublePoint[] makeGraph(int xLimit, int yLimit, int yMin = 50) {
+		
+		/// <summary>
+		/// 차트 랜덤 생성
+		/// </summary>
+		/// <param name="xLimit">x축 최대값</param>
+		/// <param name="yMax">y 초기값의 최대값</param>
+		/// <param name="yMin">y 초기값의 최소값</param>
+		/// <returns></returns>
+		private DoublePoint[] makeGraph(int xLimit, int yMax, int yMin = 50) {
 			DoublePoint[] result = new DoublePoint[xLimit];
-			double init = this.initRand.Next() % yLimit;
-			int updown = 0;
-			Random adder = new Random(new DateTime().Millisecond);
-			double current = init;
+			double init = this.initRand.Next() % yMax; // y 초기값 설정
+			int updown = 0; // 증가, 감소, 유지 결정
+			Random adder = new Random(new DateTime().Millisecond); // 증가, 감소량 결정
+			double current = init; // 현재 그래프 y값
 			for (int i = 0; i < xLimit; i++) {
 				double add = (adder.Next() % 1000) / 100.0;
 				updown = this.updownRand.Next() % 3;
@@ -768,8 +808,12 @@ namespace AEPCopy {
 			return result;
 		}
 
+		#endregion
+
+		#region Event Handler
 		private void btnRefresh_Click(object sender, EventArgs e) {
 			this.drawChart();
 		}
+		#endregion
 	}
 }
