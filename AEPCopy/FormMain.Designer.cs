@@ -29,13 +29,13 @@
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
 			this.menuMain = new System.Windows.Forms.MenuStrip();
 			this.patientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelBtn = new System.Windows.Forms.Panel();
+			this.btnRefresh = new System.Windows.Forms.Button();
 			this.splitGraph = new System.Windows.Forms.SplitContainer();
 			this.panelLeft = new System.Windows.Forms.Panel();
 			this.chartLeft = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -43,7 +43,8 @@
 			this.chartRight = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.btnRefresh = new System.Windows.Forms.Button();
+			this.lvFileList = new System.Windows.Forms.ListView();
+			this.column파일명 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuMain.SuspendLayout();
 			this.panelBtn.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitGraph)).BeginInit();
@@ -55,6 +56,7 @@
 			this.panelRight.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartRight)).BeginInit();
 			this.panel1.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuMain
@@ -103,6 +105,16 @@
 			this.panelBtn.Size = new System.Drawing.Size(800, 31);
 			this.panelBtn.TabIndex = 1;
 			// 
+			// btnRefresh
+			// 
+			this.btnRefresh.Location = new System.Drawing.Point(3, 5);
+			this.btnRefresh.Name = "btnRefresh";
+			this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+			this.btnRefresh.TabIndex = 0;
+			this.btnRefresh.Text = "새로고침";
+			this.btnRefresh.UseVisualStyleBackColor = true;
+			this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+			// 
 			// splitGraph
 			// 
 			this.splitGraph.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -117,7 +129,7 @@
 			// 
 			this.splitGraph.Panel2.Controls.Add(this.panelRight);
 			this.splitGraph.Size = new System.Drawing.Size(515, 395);
-			this.splitGraph.SplitterDistance = 258;
+			this.splitGraph.SplitterDistance = 281;
 			this.splitGraph.TabIndex = 2;
 			// 
 			// panelLeft
@@ -126,7 +138,7 @@
 			this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelLeft.Location = new System.Drawing.Point(0, 0);
 			this.panelLeft.Name = "panelLeft";
-			this.panelLeft.Size = new System.Drawing.Size(258, 395);
+			this.panelLeft.Size = new System.Drawing.Size(281, 395);
 			this.panelLeft.TabIndex = 0;
 			// 
 			// chartLeft
@@ -146,7 +158,7 @@
 			series1.Legend = "Legend1";
 			series1.Name = "Series1";
 			this.chartLeft.Series.Add(series1);
-			this.chartLeft.Size = new System.Drawing.Size(233, 329);
+			this.chartLeft.Size = new System.Drawing.Size(256, 329);
 			this.chartLeft.TabIndex = 0;
 			this.chartLeft.Text = "chart1";
 			// 
@@ -156,7 +168,7 @@
 			this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelRight.Location = new System.Drawing.Point(0, 0);
 			this.panelRight.Name = "panelRight";
-			this.panelRight.Size = new System.Drawing.Size(253, 395);
+			this.panelRight.Size = new System.Drawing.Size(230, 395);
 			this.panelRight.TabIndex = 0;
 			// 
 			// chartRight
@@ -176,7 +188,7 @@
 			series2.Legend = "Legend1";
 			series2.Name = "Series1";
 			this.chartRight.Series.Add(series2);
-			this.chartRight.Size = new System.Drawing.Size(234, 329);
+			this.chartRight.Size = new System.Drawing.Size(211, 329);
 			this.chartRight.TabIndex = 1;
 			this.chartRight.Text = "chart1";
 			// 
@@ -192,23 +204,36 @@
 			// 
 			// panel2
 			// 
-			this.panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel2.BackgroundImage")));
 			this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.panel2.Controls.Add(this.lvFileList);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel2.Location = new System.Drawing.Point(515, 0);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(285, 395);
 			this.panel2.TabIndex = 3;
 			// 
-			// btnRefresh
+			// lvFileList
 			// 
-			this.btnRefresh.Location = new System.Drawing.Point(3, 5);
-			this.btnRefresh.Name = "btnRefresh";
-			this.btnRefresh.Size = new System.Drawing.Size(75, 23);
-			this.btnRefresh.TabIndex = 0;
-			this.btnRefresh.Text = "새로고침";
-			this.btnRefresh.UseVisualStyleBackColor = true;
-			this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+			this.lvFileList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.column파일명});
+			this.lvFileList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvFileList.GridLines = true;
+			this.lvFileList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lvFileList.HideSelection = false;
+			this.lvFileList.Location = new System.Drawing.Point(0, 0);
+			this.lvFileList.MultiSelect = false;
+			this.lvFileList.Name = "lvFileList";
+			this.lvFileList.Size = new System.Drawing.Size(285, 395);
+			this.lvFileList.Sorting = System.Windows.Forms.SortOrder.Descending;
+			this.lvFileList.TabIndex = 0;
+			this.lvFileList.UseCompatibleStateImageBehavior = false;
+			this.lvFileList.View = System.Windows.Forms.View.Details;
+			this.lvFileList.SelectedIndexChanged += new System.EventHandler(this.lvFileList_SelectedIndexChanged);
+			// 
+			// column파일명
+			// 
+			this.column파일명.Text = "파일명";
+			this.column파일명.Width = 300;
 			// 
 			// FormMain
 			// 
@@ -233,6 +258,7 @@
 			this.panelRight.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chartRight)).EndInit();
 			this.panel1.ResumeLayout(false);
+			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -252,8 +278,10 @@
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartLeft;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartRight;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Button btnRefresh;
+		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.ListView lvFileList;
+		private System.Windows.Forms.ColumnHeader column파일명;
 	}
 }
 
